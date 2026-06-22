@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log In | MenuPlus</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+  <div class="auth-wrapper">
+
+    <!-- LEFT: Branding panel -->
+    <aside class="brand-panel">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+
+      <div class="brand-content">
+        <div class="brand-mark">
+          <img src="assets/logo-icon.jpg" alt="MenuPlus logo" class="brand-mark__icon-img">
+          <span class="brand-mark__name">menuplus</span>
+        </div>
+
+        <h1 class="brand-headline">Good food,<br>well planned.</h1>
+        <p class="brand-subtext">
+          Build your menu, set your date, and we'll handle the rest —
+          from the first bite to the last guest.
+        </p>
+
+        <ul class="brand-points">
+          <li><span class="point-dot"></span>Pick mains, sides, drinks &amp; desserts</li>
+          <li><span class="point-dot"></span>Track your booking status in real time</li>
+          <li><span class="point-dot"></span>Corporate accounts get automatic discounts</li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- RIGHT: Login form -->
+    <main class="form-panel">
+      <div class="form-card">
+
+        <div class="form-header">
+          <h2>Welcome back</h2>
+          <p>Log in to plan your next event.</p>
+        </div>
+
+        <form class="login-form" id="login-form" novalidate>
+
+          <p class="form-error" id="form-error" hidden>Please enter both your email and password.</p>
+
+          <div class="field-group">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+          </div>
+
+          <div class="field-group">
+            <div class="field-label-row">
+              <label for="password">Password</label>
+              <a href="#" class="inline-link">Forgot password?</a>
+            </div>
+            <div class="password-input">
+              <input type="password" id="password" name="password" placeholder="Enter your password" autocomplete="current-password" required>
+              <button type="button" class="toggle-visibility" aria-label="Show password">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary">Log in</button>
+
+          <div class="divider"><span>or</span></div>
+
+          <p class="signup-prompt">
+            New to MenuPlus?
+            <a href="register.html" class="inline-link inline-link--bold">Create an account</a>
+          </p>
+
+        </form>
+      </div>
+
+      <p class="form-footer">© 2026 MenuPlus. All rights reserved.</p>
+    </main>
+
+  </div>
+
+  <script>
+    /* ============================================================
+       PLACEHOLDER ONLY — NOT REAL AUTHENTICATION
+       ------------------------------------------------------------
+       This just simulates a login so the prototype is clickable.
+       It does NOT check credentials against any real user/database.
+       Replace this entire block with a real API call (e.g. fetch to
+       a /login endpoint) once the backend is ready. The backend dev
+       should swap this out, not build on top of it.
+       ============================================================ */
+    document.getElementById('login-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const errorMsg = document.getElementById('form-error');
+
+      if (!email || !password) {
+        errorMsg.hidden = false;
+        return;
+      }
+
+      errorMsg.hidden = true;
+
+      // Simulated "success" — just navigates through to the dashboard.
+      window.location.href = 'dashboard.html';
+    });
+
+    // Password show/hide toggle
+    const toggleBtn = document.querySelector('.toggle-visibility');
+    const passwordInput = document.getElementById('password');
+
+    toggleBtn.addEventListener('click', function () {
+      const isHidden = passwordInput.type === 'password';
+      passwordInput.type = isHidden ? 'text' : 'password';
+      toggleBtn.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
+    });
+  </script>
+
+</body>
+</html>

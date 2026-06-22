@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Build Your Menu | MenuPlus</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="menu.css">
+</head>
+<body>
+
+  <div class="page-wrapper">
+
+    <!-- Top nav -->
+    <header class="topbar">
+      <div class="topbar__brand">
+        <img src="assets/logo-icon.jpg" alt="MenuPlus logo" class="topbar__icon-img">
+        <span class="topbar__name">menu<span class="topbar__name-accent">plus</span></span>
+      </div>
+      <div class="topbar__user">
+        <span class="user-avatar">A</span>
+        <span class="user-name">Amaka O.</span>
+        <a href="login.html" class="logout-link">Log out</a>
+      </div>
+    </header>
+
+    <main class="content">
+
+      <!-- Step tracker -->
+      <ol class="step-tracker" aria-label="Booking steps">
+        <li class="step-tracker__item is-done">
+          <span class="step-tracker__circle">✓</span>
+          <span class="step-tracker__label">Event Details</span>
+        </li>
+        <li class="step-tracker__connector"></li>
+        <li class="step-tracker__item is-active">
+          <span class="step-tracker__circle">2</span>
+          <span class="step-tracker__label">Build Menu</span>
+        </li>
+      </ol>
+
+      <div class="menu-layout">
+
+        <!-- LEFT: Menu browsing -->
+        <div class="menu-browse">
+
+          <!-- Jump nav -->
+          <nav class="jump-nav" aria-label="Menu categories">
+            <a href="#mains" class="jump-nav__link is-active">Mains</a>
+            <a href="#sides" class="jump-nav__link">Sides</a>
+            <a href="#drinks" class="jump-nav__link">Drinks</a>
+            <a href="#desserts" class="jump-nav__link">Desserts</a>
+          </nav>
+
+          <!-- MAINS -->
+          <section class="menu-section" id="mains">
+            <h2 class="menu-section__title">Mains</h2>
+            <div class="item-grid">
+
+              <article class="item-card" data-name="Jollof Rice & Grilled Chicken" data-price="4500">
+                <div class="item-card__top">
+                  <h3>Jollof Rice &amp; Grilled Chicken</h3>
+                  <button class="info-btn" type="button" aria-label="View description" data-tooltip="Smoky party-style jollof rice served with herb-marinated grilled chicken thigh.">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
+                  </button>
+                </div>
+                <p class="item-card__price">₦4,500</p>
+                <div class="item-card__controls">
+                  <div class="stepper stepper--sm">
+                    <button type="button" class="stepper__btn" data-action="decrease">−</button>
+                    <input type="number" value="1" min="1" inputmode="numeric">
+                    <button type="button" class="stepper__btn" data-action="increase">+</button>
+                  </div>
+                  <button type="button" class="btn-add">Add to cart</button>
+                </div>
+              </article>
+
+              <article class="item-card" data-name="Fried Rice & Beef Suya Skewers" data-price="4200">
+                <div class="item-card__top">
+                  <h3>Fried Rice &amp; Beef Suya Skewers</h3>
+                  <button class="info-btn" type="button" aria-label="View description" data-tooltip="Vegetable fried rice paired with two spiced beef suya skewers.">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
+                  </button>
+                </div>
+                <p class="item-card__price">₦4,200</p>
+                <div class="item-card__controls">
+                  <div class="stepper stepper--sm">
+                    <button type="button" class="stepper__btn" data-action="decrease">−</button>
+                    <input type="number" value="1" min="1" inputmode="numeric">
+                    <button type="button" class="stepper__btn" data-action="increase">+</button>
+                  </div>
+                  <button type="button" class="btn-add">Add to cart</button>
+                </div>
+              </article>
+
+              <article class="item-card" data-name="Pounded Yam & Egusi Soup" data-price="5000">
+                <div class="item-card__top">
+                  <h3>Pounded Yam &amp; Egusi Soup</h3>
+                  <button class="info-btn" type="button" aria-label="View description" data-tooltip="Smooth pounded yam with rich egusi soup, assorted meat &amp; fish.">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
+                  </button>
+                </div>
+                <p class="item-card__price">₦5,000</p>
+                <div class="item-card__controls">
+                  <div class="stepper stepper--sm">
+                    <button type="button" class="stepper__btn" data-action="decrease">−</button>
+                    <input type="number" value="1" min="1" inputmode="numeric">
+                    <button type="button" class="stepper__btn" data-action="increase">+</button>
+                  </div>
+                  <button type="button" class="btn-add">Add to cart</button>
+                </div>
+              </article>
+
+            </div>
+          </section>
+
+          <!-- SIDES -->
+          <section class="menu-section" id="sides">
+            <h2 class="menu-section__title">Sides</h2>
+            <div class="item-grid">
+
+              <article class="item-card" data-name="Plantain (Dodo)" data-price="1200">
+                <div class="item-card__top">
+                  <h3>Plantain (Dodo)</h3>
+                  <button class="info-btn" type="button" aria-label="View description" data-tooltip="Sweet fried ripe plantain slices.">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
+                  </button>
+                </div>
+                <p class="item-card__price">₦1,200</p>
+                <div class="item-card__controls">
+                  <div class="stepper stepper--sm">
+                    <button type="button" class="stepper__btn" data-action="decrease">−</button>
+                    <input type="number" value="1" min="1" inputmode="numeric">
+                    <button type="button" class="stepper__btn" data-action="increase">+</button>
+                  </div>
+                  <button type="button" class="btn-add">Add to cart</button>
+                </div>
+              </article>
+
+              <article class="item-card" data-name="Coleslaw" data-price="1000">
+                <div class="item-card__top">
+                  <h3>Coleslaw</h3>
+                  <button class="info-btn" type="button" aria-label="View description" data-tooltip="Crisp cabbage &amp; carrot slaw in a light creamy dressing.">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
+                  </button>
+                </div>
+                <p class="item-card__price">₦1,000</p>
+                <div class="item-card__controls">
+                  <div class="stepper stepper--sm">
+                    <button type="button" class="stepper__btn" data-action="decrease">−</button>
+                    <input type="number" value="1" min="1" inputmode="numeric">
+                    <button type="button" class="stepper__btn" data-action="increase">+</button>
+                  </div>
+                  <button type="button" class="btn-add">Add to cart</button>
+                </div>
+              </article>
+
+            </div>
+          </section>
+
+          <!-- DRINKS -->
+          <section class="menu-section" id="drinks">
+            <h2 class="menu-section__title">Drinks</h2>
+            <div class="item-grid">
+
+              <article class="item-card" data-name="Chapman (Jug)" data-price="3500">
+                <div class="item-card__top">
+                  <h3>Chapman (Jug)</h3>
+                  <button class="info-btn" type="button" aria-label="View description" data-tooltip="Classic Nigerian Chapman cocktail, serves approx. 6 guests.">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
+                  </button>
+                </div>
+                <p class="item-card__price">₦3,500</p>
+                <div class="item-card__controls">
+                  <div class="stepper stepper--sm">
+                    <button type="button" class="stepper__btn" data-action="decrease">−</button>
+                    <input type="number" value="1" min="1" inputmode="numeric">
+                    <button type="button" class="stepper__btn" data-action="increase">+</button>
+                  </div>
+                  <button type="button" class="btn-add">Add to cart</button>
+                </div>
+              </article>
+
+              <article class="item-card" data-name="Soft Drinks (Crate)" data-price="6000">
+                <div class="item-card__top">
+                  <h3>Soft Drinks (Crate)</h3>
+                  <button class="info-btn" type="button" aria-label="View description" data-tooltip="Assorted bottled soft drinks, 24 pieces per crate.">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
+                  </button>
+                </div>
+                <p class="item-card__price">₦6,000</p>
+                <div class="item-card__controls">
+                  <div class="stepper stepper--sm">
+                    <button type="button" class="stepper__btn" data-action="decrease">−</button>
+                    <input type="number" value="1" min="1" inputmode="numeric">
+                    <button type="button" class="stepper__btn" data-action="increase">+</button>
+                  </div>
+                  <button type="button" class="btn-add">Add to cart</button>
+                </div>
+              </article>
+
+            </div>
+          </section>
+
+          <!-- DESSERTS -->
+          <section class="menu-section" id="desserts">
+            <h2 class="menu-section__title">Desserts</h2>
+            <div class="item-grid">
+
+              <article class="item-card" data-name="Chocolate Fountain (Small)" data-price="15000">
+                <div class="item-card__top">
+                  <h3>Chocolate Fountain (Small)</h3>
+                  <button class="info-btn" type="button" aria-label="View description" data-tooltip="Mini chocolate fountain with skewers, marshmallows &amp; fruit for dipping.">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
+                  </button>
+                </div>
+                <p class="item-card__price">₦15,000</p>
+                <div class="item-card__controls">
+                  <div class="stepper stepper--sm">
+                    <button type="button" class="stepper__btn" data-action="decrease">−</button>
+                    <input type="number" value="1" min="1" inputmode="numeric">
+                    <button type="button" class="stepper__btn" data-action="increase">+</button>
+                  </div>
+                  <button type="button" class="btn-add">Add to cart</button>
+                </div>
+              </article>
+
+              <article class="item-card" data-name="Assorted Mini Pastries (Tray)" data-price="8000">
+                <div class="item-card__top">
+                  <h3>Assorted Mini Pastries (Tray)</h3>
+                  <button class="info-btn" type="button" aria-label="View description" data-tooltip="Bite-sized puff puff, meat pies &amp; sausage rolls, 40 pieces per tray.">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
+                  </button>
+                </div>
+                <p class="item-card__price">₦8,000</p>
+                <div class="item-card__controls">
+                  <div class="stepper stepper--sm">
+                    <button type="button" class="stepper__btn" data-action="decrease">−</button>
+                    <input type="number" value="1" min="1" inputmode="numeric">
+                    <button type="button" class="stepper__btn" data-action="increase">+</button>
+                  </div>
+                  <button type="button" class="btn-add">Add to cart</button>
+                </div>
+              </article>
+
+            </div>
+          </section>
+
+        </div>
+
+        <!-- RIGHT: Cart sidebar -->
+        <aside class="cart-sidebar">
+          <div class="cart-card">
+
+            <h2 class="cart-card__title">Your order</h2>
+
+            <!-- Mains validation banner
+            <div class="mains-banner" id="mains-banner">
+              <div class="mains-banner__row">
+                <span class="mains-banner__label">Mains selected</span>
+                <span class="mains-banner__count" id="mains-count">0 / 50</span>
+              </div>
+              <div class="mains-banner__bar">
+                <div class="mains-banner__fill" id="mains-fill"></div>
+              </div>
+              <p class="mains-banner__hint" id="mains-hint">Add at least 50 Mains to match your guest count.</p>
+            </div> -->
+
+            <div class="cart-items" id="cart-items">
+              <p class="cart-empty" id="cart-empty">Your cart is empty. Add items from the menu to get started.</p>
+            </div>
+
+            <div class="cart-summary">
+              <div class="cart-summary__row">
+                <span>Subtotal</span>
+                <span id="cart-subtotal">₦0</span>
+              </div>
+            </div>
+
+            <button type="button" class="btn-primary btn-primary--full" id="checkout-btn" disabled>
+              Proceed to checkout
+            </button>
+          </div>
+        </aside>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <script>
+    /* ================================================================
+       PLACEHOLDER FRONTEND LOGIC ONLY
+       ----------------------------------------------------------------
+       This simulates cart behavior entirely in the browser so the
+       prototype is clickable: adding items, editing quantities, the
+       Mains-vs-guest-count banner, and the subtotal.
+
+       It does NOT talk to a server, does NOT persist data anywhere,
+       and does NOT enforce the real business rules described in the
+       specs (corporate discounts, 10% service charge, calendar /
+       feasibility checks, etc.) — those belong in the backend /
+       checkout logic.
+
+       Whoever wires up the real system should replace the state
+       object below with real data from the API, and replace the
+       event handlers with calls that talk to that API.
+       ================================================================ */
+
+    // In a real app this would come from the Create Event step (Step 1).
+    // Hardcoded here purely so the Mains banner has something to compare against.
+    const GUEST_COUNT = 100;
+
+    // Cart state lives only in memory — refreshing the page resets it.
+    const cart = {}; // { itemName: { price, qty, isMain } }
+
+    const MAINS_SECTION_ID = 'mains';
+
+    function formatNaira(amount) {
+      return '₦' + amount.toLocaleString('en-NG');
+    }
+
+    function isMainsItem(cardEl) {
+      return !!cardEl.closest('#' + MAINS_SECTION_ID);
+    }
+
+    /* ---------------- Jump nav active state ---------------- */
+    const jumpLinks = document.querySelectorAll('.jump-nav__link');
+    jumpLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        jumpLinks.forEach(l => l.classList.remove('is-active'));
+        link.classList.add('is-active');
+      });
+    });
+
+    /* ---------------- Info tooltip toggle (tap to open on mobile/click) ---------------- */
+    document.querySelectorAll('.info-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const wasOpen = btn.classList.contains('is-open');
+        document.querySelectorAll('.info-btn.is-open').forEach(b => b.classList.remove('is-open'));
+        if (!wasOpen) btn.classList.add('is-open');
+      });
+    });
+    document.addEventListener('click', () => {
+      document.querySelectorAll('.info-btn.is-open').forEach(b => b.classList.remove('is-open'));
+    });
+
+    /* ---------------- Per-card quantity steppers (before adding to cart) ---------------- */
+    document.querySelectorAll('.item-card').forEach(card => {
+      const stepper = card.querySelector('.stepper');
+      const input = stepper.querySelector('input[type="number"]');
+
+      stepper.querySelectorAll('.stepper__btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          let value = parseInt(input.value, 10) || 1;
+          if (btn.dataset.action === 'increase') value++;
+          if (btn.dataset.action === 'decrease') value = Math.max(1, value - 1);
+          input.value = value;
+        });
+      });
+    });
+
+    /* ---------------- Add to cart ---------------- */
+    document.querySelectorAll('.btn-add').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const card = btn.closest('.item-card');
+        const name = card.dataset.name;
+        const price = parseInt(card.dataset.price, 10);
+        const qty = parseInt(card.querySelector('input[type="number"]').value, 10) || 1;
+        const isMain = isMainsItem(card);
+
+        cart[name] = { price, qty, isMain };
+
+        // Duplicate prevention: disable this card's add button + qty stepper
+        btn.disabled = true;
+        btn.textContent = 'Added ✓';
+        card.querySelectorAll('.stepper__btn, input[type="number"]').forEach(el => el.disabled = true);
+
+        renderCart();
+      });
+    });
+
+    /* ---------------- Render cart sidebar ---------------- */
+    function renderCart() {
+      const cartItemsEl = document.getElementById('cart-items');
+      const emptyEl = document.getElementById('cart-empty');
+      const checkoutBtn = document.getElementById('checkout-btn');
+      const entries = Object.entries(cart);
+
+      cartItemsEl.innerHTML = '';
+
+      if (entries.length === 0) {
+        cartItemsEl.appendChild(emptyEl);
+        checkoutBtn.disabled = true;
+      } else {
+        entries.forEach(([name, item]) => {
+          const row = document.createElement('div');
+          row.className = 'cart-item';
+          row.innerHTML = `
+            <div class="cart-item__info">
+              <p class="cart-item__name">${name}</p>
+              <p class="cart-item__price">${formatNaira(item.price)} each</p>
+            </div>
+            <div class="cart-item__qty">
+              <button type="button" data-action="decrease" aria-label="Decrease quantity">−</button>
+              <span>${item.qty}</span>
+              <button type="button" data-action="increase" aria-label="Increase quantity">+</button>
+            </div>
+            <button type="button" class="cart-item__remove" aria-label="Remove item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m2 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/>
+              </svg>
+            </button>
+          `;
+
+          row.querySelector('[data-action="increase"]').addEventListener('click', () => {
+            cart[name].qty++;
+            syncCardQty(name, cart[name].qty);
+            renderCart();
+          });
+
+          row.querySelector('[data-action="decrease"]').addEventListener('click', () => {
+            if (cart[name].qty > 1) {
+              cart[name].qty--;
+              syncCardQty(name, cart[name].qty);
+              renderCart();
+            }
+          });
+
+          row.querySelector('.cart-item__remove').addEventListener('click', () => {
+            delete cart[name];
+            reEnableCard(name);
+            renderCart();
+          });
+
+          cartItemsEl.appendChild(row);
+        });
+
+        checkoutBtn.disabled = false;
+      }
+
+      updateSubtotal();
+      // updateMainsBanner();
+    }
+
+    /* Keep the menu card's own qty stepper in sync if user edits qty from the cart */
+    function syncCardQty(name, qty) {
+      const card = document.querySelector(`.item-card[data-name="${name}"]`);
+      if (card) {
+        const input = card.querySelector('input[type="number"]');
+        input.value = qty;
+      }
+    }
+
+    /* Re-enable a menu card's Add button when its cart item is removed */
+    function reEnableCard(name) {
+      const card = document.querySelector(`.item-card[data-name="${name}"]`);
+      if (card) {
+        const addBtn = card.querySelector('.btn-add');
+        addBtn.disabled = false;
+        addBtn.textContent = 'Add to cart';
+        card.querySelectorAll('.stepper__btn, input[type="number"]').forEach(el => el.disabled = false);
+      }
+    }
+
+    function updateSubtotal() {
+      const subtotal = Object.values(cart).reduce((sum, item) => sum + item.price * item.qty, 0);
+      document.getElementById('cart-subtotal').textContent = formatNaira(subtotal);
+    }
+
+    // function updateMainsBanner() {
+    //   const mainsCount = Object.values(cart)
+    //     .filter(item => item.isMain)
+    //     .reduce((sum, item) => sum + item.qty, 0);
+
+    //   const banner = document.getElementById('mains-banner');
+    //   const countEl = document.getElementById('mains-count');
+    //   const fillEl = document.getElementById('mains-fill');
+    //   const hintEl = document.getElementById('mains-hint');
+
+    //   countEl.textContent = `${mainsCount} / ${GUEST_COUNT}`;
+    //   const pct = Math.min(100, (mainsCount / GUEST_COUNT) * 100);
+    //   fillEl.style.width = pct + '%';
+
+    //   banner.classList.remove('is-met', 'is-short');
+
+    //   if (mainsCount >= GUEST_COUNT) {
+    //     banner.classList.add('is-met');
+    //     hintEl.textContent = "You've selected enough Mains for your guest count. Nice!";
+    //   } else {
+    //     banner.classList.add('is-short');
+    //     const remaining = GUEST_COUNT - mainsCount;
+    //     hintEl.textContent = `Add ${remaining} more Main${remaining === 1 ? '' : 's'} to match your guest count.`;
+    //   }
+    // }
+
+    /* Initial render */
+    // updateMainsBanner();
+
+    /* Save cart to localStorage whenever it changes (placeholder persistence) */
+    function saveCartToStorage() {
+      localStorage.setItem('cartData', JSON.stringify(cart));
+    }
+
+    /* Update all cart-modifying functions to also save to localStorage */
+    const originalRenderCart = renderCart;
+    window.renderCart = function() {
+      originalRenderCart();
+      saveCartToStorage();
+    };
+
+    /* Wire up checkout button */
+    const checkoutLink = document.getElementById('checkout-btn');
+    if (checkoutLink) {
+      checkoutLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        const cartItems = Object.keys(cart).length;
+        if (cartItems > 0) {
+          window.location.href = 'checkout.html';
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>

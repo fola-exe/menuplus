@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pending Approvals | MenuPlus Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin-approvals.css">
+</head>
+<body>
+
+  <div class="page-wrapper">
+
+    <!-- Top nav -->
+    <header class="topbar">
+      <div class="topbar__brand">
+        <img src="../assets/logo-icon.jpg" alt="MenuPlus logo" class="topbar__icon-img">
+        <span class="topbar__name">menu<span class="topbar__name-accent">plus</span></span>
+        <span class="topbar__badge">Admin</span>
+      </div>
+      <div class="topbar__user">
+        <span class="user-avatar">J</span>
+        <span class="user-name">James A.</span>
+        <a href="admin-login.html" class="logout-link">Log out</a>
+      </div>
+    </header>
+
+    <main class="content">
+
+      <!-- Page header -->
+      <div class="page-header">
+        <h1>Pending Approvals</h1>
+        <p>Review incoming booking requests. Approve or cancel before any payment is logged.</p>
+      </div>
+
+      <!-- Requests list -->
+      <div class="requests-list" id="requests-list">
+        <!-- Populated by JavaScript -->
+      </div>
+
+      <!-- Empty state -->
+      <div class="empty-state" id="empty-state" hidden>
+        <div class="empty-state__icon">✓</div>
+        <h3>All caught up!</h3>
+        <p>There are no pending approval requests right now.</p>
+      </div>
+
+    </main>
+
+  </div>
+
+  <script>
+    /* ================================================================
+       PLACEHOLDER APPROVALS LOGIC
+       ----------------------------------------------------------------
+       This simulates the approval workflow entirely in the browser.
+       In a real app, approving/cancelling would call backend API
+       endpoints that update the actual booking status in a database.
+       ================================================================ */
+
+    const APPROVALS_STORAGE_KEY = 'adminPendingApprovals';
+
+    const defaultRequests = [
+      {
+        id: 1,
+        customer: 'Adeyemi Johnson',
+        accountType: 'individual',
+        date: '2026-07-28',
+        time: '18:00',
+        venue: '14 Admiralty Way, Lekki Phase 1, Lagos',
+        guests: 120,
+        items: [
+          { name: 'Jollof Rice & Grilled Chicken', qty: 60 },
+          { name: 'Pounded Yam & Egusi Soup', qty: 60 },
+          { name: 'Chapman (Jug)', qty: 15 },
+          { name: 'Chocolate Fountain (Small)', qty: 2 },
+        ],
+        subtotal: 612000,
+        reason: 'small_order_piggyback',
+      },
+      {
+        id: 2,
+        customer: 'TechCorp Nigeria Ltd',
+        accountType: 'corporate',
+        date: '2026-07-10',
+        time: '20:00',
+        venue: 'Eko Hotel Convention Centre, Victoria Island',
+        guests: 150,
+        items: [
+          { name: 'Fried Rice & Beef Suya Skewers', qty: 150 },
+          { name: 'Assorted Mini Pastries (Tray)', qty: 5 },
+          { name: 'Soft Drinks (Crate)', qty: 10 },
+        ],
+        subtotal: 845000,
+        reason: 'large_order',
+      },
+      {
+        id: 3,
+        customer: 'Funke Williams',
+        accountType: 'individual',
+        date: '2026-08-05',
+        time: '15:00',
+        venue: '22 Bourdillon Road, Ikoyi, Lagos',
+        guests: 25,
+        items: [
+          { name: 'Jollof Rice & Grilled Chicken', qty: 25 },
+          { name: 'Plantain (Dodo)', qty: 25 },
+        ],
+        subtotal: 142500,
+        reason: 'small_order_piggyback',
+      },
+    ];
+
+    let requests = loadRequests();
+
+    function loadRequests() {
+      const stored = localStorage.getItem(APPROVALS_STORAGE_KEY);
+      return stored ? JSON.parse(stored) : defaultRequests;
+    }
+
+    function saveRequests() {
+      localStorage.setItem(APPROVALS_STORAGE_KEY, JSON.stringify(requests));
+    }
+
+    function formatNaira(amount) {
+      return '₦' + amount.toLocaleString('en-NG');
+    }
+
+    function formatDate(dateStr) {
+      const date = new Date(dateStr + 'T00:00:00');
+      return date.toLocaleDateString('en-NG', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      });
+    }
+
+    function getReasonLabel(reason) {
+      const labels = {
+        small_order_piggyback: 'Small order — piggybacking on an existing event date',
+        large_order: 'Large order — exceeds auto-approval threshold',
+      };
+      return labels[reason] || '';
+    }
+
+    function renderRequests() {
+      const list = document.getElementById('requests-list');
+      const emptyState = document.getElementById('empty-state');
+
+      if (requests.length === 0) {
+        list.innerHTML = '';
+        emptyState.hidden = false;
+        return;
+      }
+
+      emptyState.hidden = true;
+
+      list.innerHTML = requests.map(req => `
+        <article class="request-card" data-id="${req.id}">
+          <div class="request-card__header">
+            <div>
+              <h3>${req.customer}</h3>
+              <span class="account-badge account-badge--${req.accountType}">${req.accountType === 'corporate' ? 'Corporate Account' : 'Individual Account'}</span>
+            </div>
+            <span class="reason-badge">${getReasonLabel(req.reason)}</span>
+          </div>
+
+          <div class="request-card__details">
+            <div class="detail-item">
+              <span class="detail-item__label">Date &amp; Time</span>
+              <span class="detail-item__value">${formatDate(req.date)} at ${req.time}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-item__label">Venue</span>
+              <span class="detail-item__value">${req.venue}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-item__label">Guest Count</span>
+              <span class="detail-item__value">${req.guests} guests</span>
+            </div>
+          </div>
+
+          <div class="request-card__items">
+            <span class="detail-item__label">Order Summary</span>
+            <ul class="items-list">
+              ${req.items.map(item => `<li>${item.qty} × ${item.name}</li>`).join('')}
+            </ul>
+          </div>
+
+          <div class="request-card__footer">
+            <span class="subtotal-label">Item Subtotal: <strong>${formatNaira(req.subtotal)}</strong></span>
+            <div class="request-card__actions">
+              <button type="button" class="btn-cancel" data-id="${req.id}">Cancel</button>
+              <button type="button" class="btn-approve" data-id="${req.id}">Approve</button>
+            </div>
+          </div>
+        </article>
+      `).join('');
+
+      // Attach event listeners
+      list.querySelectorAll('.btn-approve').forEach(btn => {
+        btn.addEventListener('click', () => handleDecision(parseInt(btn.dataset.id), 'approved'));
+      });
+
+      list.querySelectorAll('.btn-cancel').forEach(btn => {
+        btn.addEventListener('click', () => handleDecision(parseInt(btn.dataset.id), 'cancelled'));
+      });
+    }
+
+    function handleDecision(id, decision) {
+      const request = requests.find(r => r.id === id);
+      const card = document.querySelector(`.request-card[data-id="${id}"]`);
+
+      // Visual feedback before removing
+      card.classList.add(decision === 'approved' ? 'is-approved' : 'is-cancelled');
+
+      setTimeout(() => {
+        requests = requests.filter(r => r.id !== id);
+        saveRequests();
+        renderRequests();
+      }, 400);
+    }
+
+    // Initial render
+    renderRequests();
+  </script>
+
+</body>
+</html>

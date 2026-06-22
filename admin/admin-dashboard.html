@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | MenuPlus</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin-dashboard.css">
+</head>
+<body>
+
+  <div class="page-wrapper">
+
+    <!-- Top nav -->
+    <header class="topbar">
+      <div class="topbar__brand">
+        <img src="../assets/logo-icon.jpg" alt="MenuPlus logo" class="topbar__icon-img">
+        <span class="topbar__name">menu<span class="topbar__name-accent">plus</span></span>
+        <span class="topbar__badge">Admin</span>
+      </div>
+      <div class="topbar__user">
+        <span class="user-avatar">J</span>
+        <span class="user-name">James A.</span>
+        <a href="admin-login.html" class="logout-link">Log out</a>
+      </div>
+    </header>
+
+    <main class="content">
+
+      <!-- Welcome section -->
+      <section class="welcome-section">
+        <h1>Welcome back, James</h1>
+        <p>Here's your operations dashboard. Keep your finger on the pulse of every booking.</p>
+      </section>
+
+      <!-- Stats grid -->
+      <section class="stats-grid">
+        <div class="stat-card stat-card--pending">
+          <div class="stat-card__number">7</div>
+          <div class="stat-card__label">Pending Approvals</div>
+          <a href="admin-approvals.html" class="stat-card__link">Review →</a>
+        </div>
+
+        <div class="stat-card stat-card--upcoming">
+          <div class="stat-card__number">12</div>
+          <div class="stat-card__label">Upcoming Events</div>
+          <a href="admin-calendar.html" class="stat-card__link">View calendar →</a>
+        </div>
+
+        <div class="stat-card stat-card--completed">
+          <div class="stat-card__number">24</div>
+          <div class="stat-card__label">Completed This Month</div>
+          <a href="admin-calendar.html" class="stat-card__link">Details →</a>
+        </div>
+
+        <div class="stat-card stat-card--refunds">
+          <div class="stat-card__number">2</div>
+          <div class="stat-card__label">Requires Refund</div>
+          <a href="admin-refunds.html" class="stat-card__link">Process →</a>
+        </div>
+      </section>
+
+      <!-- Actions grid -->
+      <section class="actions-section">
+        <h2>Quick Actions</h2>
+        <div class="actions-grid">
+
+          <a href="admin-menu.html" class="action-card">
+            <div class="action-card__icon">📋</div>
+            <h3>Menu &amp; Items</h3>
+            <p>Create, edit, or disable menu items. Manage pricing and availability.</p>
+            <span class="action-card__arrow">→</span>
+          </a>
+
+          <a href="admin-calendar.html" class="action-card">
+            <div class="action-card__icon">📅</div>
+            <h3>Event Calendar</h3>
+            <p>View all bookings. Track status: upcoming, completed, cancelled.</p>
+            <span class="action-card__arrow">→</span>
+          </a>
+
+          <a href="admin-approvals.html" class="action-card">
+            <div class="action-card__icon">✓</div>
+            <h3>Pending Approvals</h3>
+            <p>Review customer booking requests. Approve or cancel before payment.</p>
+            <span class="action-card__arrow">→</span>
+          </a>
+
+          <a href="admin-refunds.html" class="action-card">
+            <div class="action-card__icon">💰</div>
+            <h3>Refunds Queue</h3>
+            <p>Track and process refunds for cancelled or modified bookings.</p>
+            <span class="action-card__arrow">→</span>
+          </a>
+
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+</body>
+</html>

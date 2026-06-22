@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | MenuPlus</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="checkout.css">
+</head>
+<body>
+
+  <div class="page-wrapper">
+
+    <!-- Top nav -->
+    <header class="topbar">
+      <div class="topbar__brand">
+        <img src="assets/logo-icon.jpg" alt="MenuPlus logo" class="topbar__icon-img">
+        <span class="topbar__name">menu<span class="topbar__name-accent">plus</span></span>
+      </div>
+      <div class="topbar__user">
+        <span class="user-avatar">A</span>
+        <span class="user-name">Amaka O.</span>
+        <a href="login.html" class="logout-link">Log out</a>
+      </div>
+    </header>
+
+    <main class="content">
+
+      <!-- Step tracker -->
+      <ol class="step-tracker" aria-label="Booking steps">
+        <li class="step-tracker__item is-done">
+          <span class="step-tracker__circle">✓</span>
+          <span class="step-tracker__label">Event Details</span>
+        </li>
+        <li class="step-tracker__connector"></li>
+        <li class="step-tracker__item is-done">
+          <span class="step-tracker__circle">✓</span>
+          <span class="step-tracker__label">Build Menu</span>
+        </li>
+        <li class="step-tracker__connector"></li>
+        <li class="step-tracker__item is-active">
+          <span class="step-tracker__circle">3</span>
+          <span class="step-tracker__label">Checkout</span>
+        </li>
+      </ol>
+
+      <div class="checkout-layout">
+
+        <!-- LEFT: Order review -->
+        <section class="order-section">
+          <div class="order-section__header">
+            <h1>Review your order</h1>
+            <p>Everything looks good? Confirm below and we'll submit your booking.</p>
+          </div>
+
+          <div class="order-items" id="order-items">
+            <!-- Populated by JS -->
+          </div>
+
+          <p class="empty-order" id="empty-order" hidden>
+            Your cart is empty. <a href="menu.html">Go back to select items.</a>
+          </p>
+        </section>
+
+        <!-- RIGHT: Billing summary -->
+        <aside class="billing-section">
+          <div class="billing-card">
+
+            <h2 class="billing-card__title">Booking Summary</h2>
+
+            <!-- Items count badge -->
+            <div class="items-badge" id="items-badge">
+              <!-- Populated by JS -->
+            </div>
+
+            <!-- Billing breakdown -->
+            <div class="billing-breakdown">
+              <div class="billing-row">
+                <span class="billing-label">Item subtotal</span>
+                <span class="billing-value" id="bill-subtotal">₦0</span>
+              </div>
+
+              <div class="billing-row">
+                <span class="billing-label">
+                  Service charge (10%)
+                  <button type="button" class="info-icon" aria-label="Service charge explanation" title="Mandatory 10% service charge to cover staff, logistics, and kitchen services.">?</button>
+                </span>
+                <span class="billing-value" id="bill-service">₦0</span>
+              </div>
+
+              <div class="billing-divider"></div>
+
+              <div class="billing-row billing-row--grand">
+                <span class="billing-label">Grand total</span>
+                <span class="billing-value billing-value--grand" id="bill-total">₦0</span>
+              </div>
+            </div>
+
+            <div class="billing-note">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>
+              </svg>
+              <p>You'll be able to pay via transfer or in-person on the event day.</p>
+            </div>
+
+            <button type="button" class="btn-primary btn-primary--full" id="confirm-btn">
+              Confirm booking
+            </button>
+
+            <a href="menu.html" class="edit-link">← Edit your order</a>
+
+          </div>
+        </aside>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <script>
+    /* ================================================================
+       PLACEHOLDER CHECKOUT LOGIC
+       ----------------------------------------------------------------
+       This reads the cart from localStorage (persisted from the menu
+       page), displays the itemized order review and billing breakdown,
+       and simulates order confirmation.
+
+       In a real app, this would call a backend API to create the order,
+       apply discounts, calculate taxes, and return a booking ID.
+       ================================================================ */
+
+    function formatNaira(amount) {
+      return '₦' + amount.toLocaleString('en-NG');
+    }
+
+    function loadCartFromStorage() {
+      const stored = localStorage.getItem('cartData');
+      return stored ? JSON.parse(stored) : {};
+    }
+
+    function renderOrderReview() {
+      const cart = loadCartFromStorage();
+      const orderItemsEl = document.getElementById('order-items');
+      const emptyEl = document.getElementById('empty-order');
+      const entries = Object.entries(cart);
+
+      orderItemsEl.innerHTML = '';
+
+      if (entries.length === 0) {
+        emptyEl.hidden = false;
+        document.getElementById('billing-card').hidden = true;
+      } else {
+        emptyEl.hidden = true;
+        entries.forEach(([name, item]) => {
+          const lineTotal = item.price * item.qty;
+          const row = document.createElement('article');
+          row.className = 'order-item';
+          row.innerHTML = `
+            <div class="order-item__info">
+              <h3>${name}</h3>
+              <p class="order-item__qty">${item.qty} × ${formatNaira(item.price)}</p>
+            </div>
+            <span class="order-item__total">${formatNaira(lineTotal)}</span>
+          `;
+          orderItemsEl.appendChild(row);
+        });
+      }
+
+      updateBillingSummary(cart);
+    }
+
+    function updateBillingSummary(cart) {
+      const entries = Object.entries(cart);
+      const itemCount = entries.length;
+      const subtotal = entries.reduce((sum, [name, item]) => sum + item.price * item.qty, 0);
+      const serviceCharge = Math.round(subtotal * 0.1);
+      const grandTotal = subtotal + serviceCharge;
+
+      // Items badge
+      const badgeEl = document.getElementById('items-badge');
+      badgeEl.innerHTML = `
+        <span class="badge-dot"></span>
+        <span class="badge-text">${itemCount} item${itemCount !== 1 ? 's' : ''} in your order</span>
+      `;
+
+      // Billing rows
+      document.getElementById('bill-subtotal').textContent = formatNaira(subtotal);
+      document.getElementById('bill-service').textContent = formatNaira(serviceCharge);
+      document.getElementById('bill-total').textContent = formatNaira(grandTotal);
+
+      // Enable/disable confirm button
+      document.getElementById('confirm-btn').disabled = itemCount === 0;
+    }
+
+    // Confirm booking button
+    document.getElementById('confirm-btn').addEventListener('click', () => {
+      // In a real app, this would POST to a backend endpoint to create the order.
+      // For now, it just clears localStorage and navigates to a confirmation page.
+      localStorage.removeItem('cartData');
+      window.location.href = 'confirmation.html';
+    });
+
+    // Initial render
+    renderOrderReview();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Refunds Queue | MenuPlus Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin-refunds.css">
+</head>
+<body>
+
+  <div class="page-wrapper">
+
+    <!-- Top nav -->
+    <header class="topbar">
+      <div class="topbar__brand">
+        <img src="../assets/logo-icon.jpg" alt="MenuPlus logo" class="topbar__icon-img">
+        <span class="topbar__name">menu<span class="topbar__name-accent">plus</span></span>
+        <span class="topbar__badge">Admin</span>
+      </div>
+      <div class="topbar__user">
+        <span class="user-avatar">J</span>
+        <span class="user-name">James A.</span>
+        <a href="admin-login.html" class="logout-link">Log out</a>
+      </div>
+    </header>
+
+    <main class="content">
+
+      <!-- Page header -->
+      <div class="page-header">
+        <h1>Refunds Queue</h1>
+        <p>Track refunds owed for cancelled, pre-paid bookings. Mark as refunded once processed.</p>
+      </div>
+
+      <!-- Refunds list -->
+      <div class="refunds-list" id="refunds-list">
+        <!-- Populated by JavaScript -->
+      </div>
+
+      <!-- Empty state -->
+      <div class="empty-state" id="empty-state" hidden>
+        <div class="empty-state__icon">💸</div>
+        <h3>No refunds pending</h3>
+        <p>There are currently no bookings awaiting a refund.</p>
+      </div>
+
+    </main>
+
+  </div>
+
+  <script>
+    /* ================================================================
+       PLACEHOLDER REFUNDS LOGIC
+       ----------------------------------------------------------------
+       This simulates the refund tracking workflow. In a real app,
+       marking something as "Refunded" would call a backend API and
+       likely connect to actual payment processor records.
+       ================================================================ */
+
+    const REFUNDS_STORAGE_KEY = 'adminRefunds';
+
+    const defaultRefunds = [
+      {
+        id: 1,
+        customer: 'Chioma Okafor',
+        bookingId: 'EVT-2026-0317',
+        date: '2026-06-30',
+        guests: 80,
+        cancelledBy: 'admin',
+        cancelReason: 'Venue became unavailable due to a double-booking conflict.',
+        amountPaid: 380000,
+        paymentStage: 'fully_paid',
+        status: 'awaiting_refund',
+      },
+      {
+        id: 2,
+        customer: 'Lagos Tech Summit',
+        bookingId: 'EVT-2026-0298',
+        date: '2026-06-18',
+        guests: 200,
+        cancelledBy: 'admin',
+        cancelReason: 'Customer requested cancellation after deposit was paid.',
+        amountPaid: 150000,
+        paymentStage: 'deposit_paid',
+        status: 'awaiting_refund',
+      },
+    ];
+
+    let refunds = loadRefunds();
+
+    function loadRefunds() {
+      const stored = localStorage.getItem(REFUNDS_STORAGE_KEY);
+      return stored ? JSON.parse(stored) : defaultRefunds;
+    }
+
+    function saveRefunds() {
+      localStorage.setItem(REFUNDS_STORAGE_KEY, JSON.stringify(refunds));
+    }
+
+    function formatNaira(amount) {
+      return '₦' + amount.toLocaleString('en-NG');
+    }
+
+    function formatDate(dateStr) {
+      const date = new Date(dateStr + 'T00:00:00');
+      return date.toLocaleDateString('en-NG', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      });
+    }
+
+    function getPaymentStageLabel(stage) {
+      const labels = {
+        deposit_paid: 'Deposit was paid',
+        fully_paid: 'Fully paid',
+      };
+      return labels[stage] || stage;
+    }
+
+    function renderRefunds() {
+      const list = document.getElementById('refunds-list');
+      const emptyState = document.getElementById('empty-state');
+
+      if (refunds.length === 0) {
+        list.innerHTML = '';
+        emptyState.hidden = false;
+        return;
+      }
+
+      emptyState.hidden = true;
+
+      list.innerHTML = refunds.map(refund => `
+        <article class="refund-card" data-id="${refund.id}">
+          <div class="refund-card__header">
+            <div>
+              <h3>${refund.customer}</h3>
+              <span class="booking-id-tag">${refund.bookingId}</span>
+            </div>
+            <span class="status-flag">Requires Refund</span>
+          </div>
+
+          <div class="refund-card__details">
+            <div class="detail-item">
+              <span class="detail-item__label">Original Event Date</span>
+              <span class="detail-item__value">${formatDate(refund.date)}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-item__label">Guest Count</span>
+              <span class="detail-item__value">${refund.guests} guests</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-item__label">Payment Stage</span>
+              <span class="detail-item__value">${getPaymentStageLabel(refund.paymentStage)}</span>
+            </div>
+          </div>
+
+          <div class="refund-card__reason">
+            <span class="detail-item__label">Cancellation Reason</span>
+            <p>${refund.cancelReason}</p>
+          </div>
+
+          <div class="refund-card__footer">
+            <span class="amount-label">Amount to refund: <strong>${formatNaira(refund.amountPaid)}</strong></span>
+            <button type="button" class="btn-mark-refunded" data-id="${refund.id}">
+              Mark as refunded
+            </button>
+          </div>
+        </article>
+      `).join('');
+
+      list.querySelectorAll('.btn-mark-refunded').forEach(btn => {
+        btn.addEventListener('click', () => markAsRefunded(parseInt(btn.dataset.id)));
+      });
+    }
+
+    function markAsRefunded(id) {
+      const card = document.querySelector(`.refund-card[data-id="${id}"]`);
+      card.classList.add('is-refunded');
+
+      setTimeout(() => {
+        refunds = refunds.filter(r => r.id !== id);
+        saveRefunds();
+        renderRefunds();
+      }, 400);
+    }
+
+    // Initial render
+    renderRefunds();
+  </script>
+
+</body>
+</html>

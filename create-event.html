@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Event | MenuPlus</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="create-event.css">
+</head>
+<body>
+
+  <div class="page-wrapper">
+
+    <!-- Top nav -->
+    <header class="topbar">
+      <div class="topbar__brand">
+        <img src="assets/logo-icon.jpg" alt="MenuPlus logo" class="topbar__icon-img">
+        <span class="topbar__name">menu<span class="topbar__name-accent">plus</span></span>
+      </div>
+      <div class="topbar__user">
+        <span class="user-avatar">A</span>
+        <span class="user-name">Amaka O.</span>
+        <a href="login.html" class="logout-link">Log out</a>
+      </div>
+    </header>
+
+    <main class="content">
+
+      <!-- Step tracker -->
+      <ol class="step-tracker" aria-label="Booking steps">
+        <li class="step-tracker__item is-active">
+          <span class="step-tracker__circle">1</span>
+          <span class="step-tracker__label">Event Details</span>
+        </li>
+        <li class="step-tracker__connector"></li>
+        <li class="step-tracker__item">
+          <span class="step-tracker__circle">2</span>
+          <span class="step-tracker__label">Build Menu</span>
+        </li>
+      </ol>
+
+      <div class="form-shell">
+        <div class="form-shell__header">
+          <h1>Tell us about your event</h1>
+          <p>We'll use these details to plan staffing, timing, and your menu minimums.</p>
+        </div>
+
+        <form class="event-form" novalidate>
+
+          <div class="form-row form-row--split">
+            <div class="field-group">
+              <label for="event-date">Event date</label>
+              <div class="input-icon-wrap">
+                <input type="date" id="event-date" name="event-date" required>
+                <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <rect x="3" y="5" width="18" height="16" rx="3"/>
+                  <path d="M16 3v4M8 3v4M3 10h18"/>
+                </svg>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label for="event-time">Starting time</label>
+              <div class="input-icon-wrap">
+                <input type="time" id="event-time" name="event-time" required>
+                <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <circle cx="12" cy="12" r="9"/>
+                  <path d="M12 7v5l3 3"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field-group">
+              <label for="venue">Venue location</label>
+              <div class="input-icon-wrap">
+                <input type="text" id="venue" name="venue" placeholder="e.g. 14 Admiralty Way, Lekki Phase 1, Lagos" required>
+                <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M12 21s-7-6.5-7-11a7 7 0 1 1 14 0c0 4.5-7 11-7 11z"/>
+                  <circle cx="12" cy="10" r="2.5"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field-group">
+              <label for="guest-count">Expected guest number</label>
+              <p class="field-hint">This sets the minimum number of Main dishes you'll need to select in the next step.</p>
+              <div class="stepper">
+                <button type="button" class="stepper__btn" data-action="decrease" aria-label="Decrease guest count">−</button>
+                <input type="number" id="guest-count" name="guest-count" value="100" min="1" inputmode="numeric">
+                <button type="button" class="stepper__btn" data-action="increase" aria-label="Increase guest count">+</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <a href="dashboard.html" class="btn-ghost">Back to dashboard</a>
+            <button type="submit" class="btn-primary">
+              Continue to menu
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M13 6l6 6-6 6"/>
+              </svg>
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+    </main>
+
+  </div>
+
+  <script>
+    // Purely presentational stepper behavior — no validation/business logic
+    const stepper = document.querySelector('.stepper');
+    const input = stepper.querySelector('input[type="number"]');
+
+    stepper.querySelectorAll('.stepper__btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        let value = parseInt(input.value, 10) || 0;
+        if (btn.dataset.action === 'increase') value++;
+        if (btn.dataset.action === 'decrease') value = Math.max(1, value - 1);
+        input.value = value;
+      });
+    });
+
+    /* PLACEHOLDER — just navigates to the menu page, no real form
+       validation or data persistence. Replace with a real submit
+       handler once the backend exists. */
+    document.querySelector('.event-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      window.location.href = 'menu.html';
+    });
+  </script>
+
+</body>
+</html>

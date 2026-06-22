@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Details | MenuPlus Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin-event-detail.css">
+</head>
+<body>
+
+  <div class="page-wrapper">
+
+    <!-- Top nav -->
+    <header class="topbar">
+      <div class="topbar__brand">
+        <img src="../assets/logo-icon.jpg" alt="MenuPlus logo" class="topbar__icon-img">
+        <span class="topbar__name">menu<span class="topbar__name-accent">plus</span></span>
+        <span class="topbar__badge">Admin</span>
+      </div>
+      <div class="topbar__user">
+        <span class="user-avatar">J</span>
+        <span class="user-name">James A.</span>
+        <a href="admin-login.html" class="logout-link">Log out</a>
+      </div>
+    </header>
+
+    <main class="content">
+
+      <a href="admin-calendar.html" class="back-link">← Back to calendar</a>
+
+      <!-- Event header -->
+      <div class="event-header">
+        <div>
+          <h1>Olamide &amp; Kunle Wedding</h1>
+          <span class="booking-id-tag">EVT-2026-0205</span>
+        </div>
+        <span class="status-badge status-badge--upcoming" id="status-badge">Upcoming</span>
+      </div>
+
+      <div class="detail-layout">
+
+        <!-- LEFT: Event info -->
+        <div class="info-column">
+
+          <section class="info-card">
+            <h2>Event Details</h2>
+            <div class="info-grid">
+              <div class="info-item">
+                <span class="info-item__label">Customer</span>
+                <span class="info-item__value">Olamide Adeyinka</span>
+              </div>
+              <div class="info-item">
+                <span class="info-item__label">Account Type</span>
+                <span class="info-item__value">Individual</span>
+              </div>
+              <div class="info-item">
+                <span class="info-item__label">Date &amp; Time</span>
+                <span class="info-item__value">August 2, 2026 at 4:00 PM</span>
+              </div>
+              <div class="info-item">
+                <span class="info-item__label">Venue</span>
+                <span class="info-item__value">The Civic Centre, Ozumba Mbadiwe, Lagos</span>
+              </div>
+              <div class="info-item">
+                <span class="info-item__label">Guest Count</span>
+                <span class="info-item__value">200 guests</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="info-card">
+            <h2>Order Summary</h2>
+            <ul class="order-list">
+              <li><span>200 × Jollof Rice & Grilled Chicken</span><span>₦900,000</span></li>
+              <li><span>200 × Pounded Yam & Egusi Soup</span><span>₦1,000,000</span></li>
+              <li><span>30 × Chapman (Jug)</span><span>₦105,000</span></li>
+              <li><span>10 × Chocolate Fountain (Small)</span><span>₦150,000</span></li>
+            </ul>
+            <div class="order-total">
+              <span>Item Subtotal</span>
+              <span>₦2,155,000</span>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- RIGHT: Management panel -->
+        <div class="management-column">
+
+          <!-- Staffing -->
+          <section class="management-card">
+            <h2>Staffing</h2>
+            <p class="management-card__hint">Baseline staff count is calculated automatically based on guest count. Adjust manually if needed.</p>
+
+            <div class="staffing-row">
+              <span class="staffing-row__label">Baseline (auto-calculated)</span>
+              <span class="staffing-row__value">14 staff</span>
+            </div>
+
+            <div class="staffing-row staffing-row--editable">
+              <span class="staffing-row__label">Manual adjustment</span>
+              <div class="stepper">
+                <button type="button" class="stepper__btn" data-action="decrease">−</button>
+                <input type="number" id="staff-count" value="14" min="0">
+                <button type="button" class="stepper__btn" data-action="increase">+</button>
+              </div>
+            </div>
+
+            <p class="staffing-note" id="staffing-note">Currently matches baseline.</p>
+          </section>
+
+          <!-- Payment status -->
+          <section class="management-card">
+            <h2>Payment Status</h2>
+            <p class="management-card__hint">This is an administrative ledger. Update it to reflect offline or bank transfer payments received.</p>
+
+            <div class="field-group">
+              <label for="payment-status">Status</label>
+              <select id="payment-status">
+                <option value="unpaid">Unpaid</option>
+                <option value="deposit_paid" selected>Deposit Paid</option>
+                <option value="fully_paid">Fully Paid</option>
+              </select>
+            </div>
+          </section>
+
+          <!-- Event actions -->
+          <section class="management-card management-card--danger">
+            <h2>Event Actions</h2>
+            <p class="management-card__hint">Cancelling a confirmed, pre-paid event will route it to the Refunds Queue automatically.</p>
+            <button type="button" class="btn-cancel-event" id="cancel-event-btn">Cancel this event</button>
+          </section>
+
+          <button type="button" class="btn-save" id="save-btn">Save changes</button>
+
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <script>
+    /* ================================================================
+       PLACEHOLDER EVENT DETAIL LOGIC
+       ----------------------------------------------------------------
+       This simulates staffing adjustment and payment status editing.
+       In a real app, saving would call a backend API to persist the
+       change, and the "Cancel this event" action would update the
+       booking's status and trigger the refund queue routing.
+       ================================================================ */
+
+    const BASELINE_STAFF = 14;
+
+    const stepper = document.querySelector('.stepper');
+    const staffInput = document.getElementById('staff-count');
+    const staffingNote = document.getElementById('staffing-note');
+
+    function updateStaffingNote() {
+      const current = parseInt(staffInput.value, 10) || 0;
+      const diff = current - BASELINE_STAFF;
+
+      if (diff === 0) {
+        staffingNote.textContent = 'Currently matches baseline.';
+      } else if (diff > 0) {
+        staffingNote.textContent = `+${diff} staff added above baseline.`;
+      } else {
+        staffingNote.textContent = `${diff} staff reduced from baseline.`;
+      }
+    }
+
+    stepper.querySelectorAll('.stepper__btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        let value = parseInt(staffInput.value, 10) || 0;
+        if (btn.dataset.action === 'increase') value++;
+        if (btn.dataset.action === 'decrease') value = Math.max(0, value - 1);
+        staffInput.value = value;
+        updateStaffingNote();
+      });
+    });
+
+    staffInput.addEventListener('input', updateStaffingNote);
+
+    // Cancel event button
+    document.getElementById('cancel-event-btn').addEventListener('click', () => {
+      const paymentStatus = document.getElementById('payment-status').value;
+      const isPrePaid = paymentStatus === 'deposit_paid' || paymentStatus === 'fully_paid';
+
+      const message = isPrePaid
+        ? 'This event has been paid for. Cancelling will route it to the Refunds Queue. Continue?'
+        : 'Are you sure you want to cancel this event?';
+
+      if (confirm(message)) {
+        document.getElementById('status-badge').textContent = 'Cancelled';
+        document.getElementById('status-badge').className = 'status-badge status-badge--cancelled';
+        alert(isPrePaid
+          ? 'Event cancelled. It has been moved to the Refunds Queue.'
+          : 'Event cancelled.');
+      }
+    });
+
+    // Save changes button (placeholder)
+    document.getElementById('save-btn').addEventListener('click', () => {
+      alert('Changes saved (placeholder — no backend connected yet).');
+    });
+  </script>
+
+</body>
+</html>

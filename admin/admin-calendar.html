@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Calendar | MenuPlus Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin-calendar.css">
+</head>
+<body>
+
+  <div class="page-wrapper">
+
+    <!-- Top nav -->
+    <header class="topbar">
+      <div class="topbar__brand">
+        <img src="../assets/logo-icon.jpg" alt="MenuPlus logo" class="topbar__icon-img">
+        <span class="topbar__name">menu<span class="topbar__name-accent">plus</span></span>
+        <span class="topbar__badge">Admin</span>
+      </div>
+      <div class="topbar__user">
+        <span class="user-avatar">J</span>
+        <span class="user-name">James A.</span>
+        <a href="admin-login.html" class="logout-link">Log out</a>
+      </div>
+    </header>
+
+    <main class="content">
+
+      <!-- Page header -->
+      <div class="page-header">
+        <h1>Event Calendar</h1>
+        <p>Track all bookings across your event calendar. View status, payment, and guest counts at a glance.</p>
+      </div>
+
+      <!-- Status filters -->
+      <div class="status-filter">
+        <button type="button" class="filter-btn is-active" data-status="all">All events</button>
+        <button type="button" class="filter-btn" data-status="upcoming">Upcoming</button>
+        <button type="button" class="filter-btn" data-status="completed">Completed</button>
+        <button type="button" class="filter-btn" data-status="cancelled">Cancelled</button>
+      </div>
+
+      <!-- Events table -->
+      <div class="table-wrapper">
+        <table class="events-table" id="events-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Customer</th>
+              <th>Guests</th>
+              <th>Items</th>
+              <th>Status</th>
+              <th>Payment</th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+            <!-- Populated by JavaScript -->
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+
+  </div>
+
+  <script>
+    /* ================================================================
+       PLACEHOLDER EVENT CALENDAR LOGIC
+       ----------------------------------------------------------------
+       This simulates event tracking and filtering. In a real app,
+       events would come from a backend API and would reflect actual
+       bookings from the customer side.
+       ================================================================ */
+
+    const EVENTS_STORAGE_KEY = 'adminEvents';
+
+    // Sample events
+    const defaultEvents = [
+      {
+        id: 1,
+        date: '2026-07-28',
+        time: '18:00',
+        customer: 'Adeyemi Johnson',
+        guests: 120,
+        items: 8,
+        status: 'pending',
+        payment: 'unpaid',
+      },
+      {
+        id: 2,
+        date: '2026-06-14',
+        time: '14:00',
+        customer: 'Quarterly Team Lunch',
+        guests: 40,
+        items: 5,
+        status: 'upcoming',
+        payment: 'deposit_paid',
+      },
+      {
+        id: 3,
+        date: '2026-05-02',
+        time: '19:30',
+        customer: 'Olamide & Kunle Wedding',
+        guests: 200,
+        items: 12,
+        status: 'completed',
+        payment: 'fully_paid',
+      },
+      {
+        id: 4,
+        date: '2026-06-20',
+        time: '12:00',
+        customer: 'Corporate Lunch - Lekki',
+        guests: 60,
+        items: 6,
+        status: 'upcoming',
+        payment: 'fully_paid',
+      },
+      {
+        id: 5,
+        date: '2026-04-15',
+        time: '17:00',
+        customer: 'Birthday Party',
+        guests: 30,
+        items: 4,
+        status: 'completed',
+        payment: 'fully_paid',
+      },
+      {
+        id: 6,
+        date: '2026-07-10',
+        time: '20:00',
+        customer: 'Corporate Gala',
+        guests: 150,
+        items: 10,
+        status: 'pending',
+        payment: 'unpaid',
+      },
+      {
+        id: 7,
+        date: '2026-03-22',
+        time: '16:00',
+        customer: 'Wedding Bridal Shower',
+        guests: 50,
+        items: 5,
+        status: 'cancelled',
+        payment: 'fully_paid',
+      },
+      {
+        id: 8,
+        date: '2026-06-25',
+        time: '13:00',
+        customer: 'Family Reunion',
+        guests: 80,
+        items: 7,
+        status: 'upcoming',
+        payment: 'deposit_paid',
+      },
+    ];
+
+    let events = loadEvents();
+    let currentFilter = 'all';
+
+    function loadEvents() {
+      const stored = localStorage.getItem(EVENTS_STORAGE_KEY);
+      return stored ? JSON.parse(stored) : defaultEvents;
+    }
+
+    function formatDate(dateStr) {
+      const date = new Date(dateStr + 'T00:00:00');
+      return date.toLocaleDateString('en-NG', {
+        weekday: 'short',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      });
+    }
+
+    function getStatusLabel(status) {
+      const labels = {
+        pending: 'Pending Approval',
+        upcoming: 'Upcoming',
+        completed: 'Completed',
+        cancelled: 'Cancelled',
+      };
+      return labels[status] || status;
+    }
+
+    function getPaymentLabel(payment) {
+      const labels = {
+        unpaid: 'Unpaid',
+        deposit_paid: 'Deposit Paid',
+        fully_paid: 'Fully Paid',
+      };
+      return labels[payment] || payment;
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('table-body');
+      const filtered = currentFilter === 'all' 
+        ? events 
+        : events.filter(e => e.status === currentFilter);
+
+      tbody.innerHTML = filtered.map(event => `
+        <tr class="table-row table-row--${event.status}" data-id="${event.id}" tabindex="0" role="button" aria-label="View details for ${event.customer}">
+          <td class="table-cell table-cell--date">${formatDate(event.date)}</td>
+          <td class="table-cell">${event.time}</td>
+          <td class="table-cell table-cell--customer">${event.customer}</td>
+          <td class="table-cell table-cell--number">${event.guests}</td>
+          <td class="table-cell table-cell--number">${event.items}</td>
+          <td class="table-cell">
+            <span class="badge badge--${event.status}">${getStatusLabel(event.status)}</span>
+          </td>
+          <td class="table-cell">
+            <span class="badge badge--payment badge--${event.payment}">${getPaymentLabel(event.payment)}</span>
+          </td>
+        </tr>
+      `).join('');
+
+      /* Make each row clickable — navigates to the Event Detail Sheet.
+         The event ID is passed in the URL so a real backend-connected
+         version could fetch that specific event's data on the detail
+         page. Right now event-detail.html shows static placeholder
+         content regardless of which row was clicked. */
+      document.querySelectorAll('.table-row').forEach(row => {
+        row.addEventListener('click', () => {
+          window.location.href = `admin-event-detail.html?id=${row.dataset.id}`;
+        });
+
+        row.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            window.location.href = `admin-event-detail.html?id=${row.dataset.id}`;
+          }
+        });
+      });
+    }
+
+    // Filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        currentFilter = btn.dataset.status;
+        renderTable();
+      });
+    });
+
+    // Initial render
+    renderTable();
+  </script>
+
+</body>
+</html>
